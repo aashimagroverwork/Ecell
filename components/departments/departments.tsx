@@ -1,13 +1,13 @@
 import {
   ArrowRight,
   BookOpen,
-  CalendarDays,
   Clapperboard,
+  ClipboardList,
   Handshake,
+  Landmark,
+  Lightbulb,
   Megaphone,
-  Palette,
-  PenLine,
-  Users,
+  Package,
 } from "lucide-react";
 import type { ComponentType, ReactNode } from "react";
 import Link from "next/link";
@@ -25,76 +25,76 @@ type Department = {
 
 export const DEPARTMENTS: Department[] = [
   {
-    id: "events",
-    icon: CalendarDays,
-    name: "Events",
-    tagline: "The stage builders",
-    description:
-      "From E-Summit to founder firesides, this team plans and runs everything that happens on ground.",
-    responsibilities: ["Fests & summits", "Workshops", "Competitions"],
-  },
-  {
-    id: "sponsorship",
+    id: "projects-partnerships",
     icon: Handshake,
-    name: "Sponsorship",
-    tagline: "The deal makers",
+    name: "Projects & Partnerships",
+    tagline: "The connectors",
     description:
-      "Builds partnerships with startups, VCs and brands that keep every initiative funded and ambitious.",
-    responsibilities: ["Brand outreach", "Partnerships", "Funding decks"],
+      "Conceptualises flagship projects and builds lasting partnerships with startups, VCs and student communities.",
+    responsibilities: ["Flagship projects", "Partner network", "Collaborations"],
   },
   {
-    id: "pr-outreach",
+    id: "incubation-innovation",
+    icon: Lightbulb,
+    name: "Incubation & Innovation",
+    tagline: "The startup nursery",
+    description:
+      "Guides student ventures from idea to launch through mentorship, incubation drives and innovation challenges.",
+    responsibilities: ["Startup incubation", "Mentor network", "Innovation challenges"],
+  },
+  {
+    id: "sponsorships-finance",
+    icon: Landmark,
+    name: "Sponsorships & Finance",
+    tagline: "The money managers",
+    description:
+      "Raises funds from brands and manages every rupee of the cell's budget with full transparency.",
+    responsibilities: ["Brand outreach", "Sponsor decks", "Budgeting"],
+  },
+  {
+    id: "pr-creatives",
     icon: Megaphone,
-    name: "PR & Outreach",
-    tagline: "The voice of the cell",
+    name: "PR & Creatives",
+    tagline: "The voice & the look",
     description:
-      "Runs the social presence and campus buzz, making sure no good story goes untold.",
-    responsibilities: ["Social media", "Campus publicity", "Inter-college ties"],
+      "Owns the cell's voice and visual identity — social media, campus buzz, posters and brand creatives.",
+    responsibilities: ["Social media", "Campus publicity", "Creatives"],
   },
   {
-    id: "content",
-    icon: PenLine,
-    name: "Content",
-    tagline: "The storytellers",
-    description:
-      "Writes the newsletter, blogs and copy — turning startup lessons into words people actually read.",
-    responsibilities: ["Newsletter", "Blogs", "Copywriting"],
-  },
-  {
-    id: "design",
-    icon: Palette,
-    name: "Design",
-    tagline: "The visual identity",
-    description:
-      "Owns the brand system and crafts creatives for every event, post and publication.",
-    responsibilities: ["Brand identity", "Creatives", "Event branding"],
-  },
-  {
-    id: "media-tech",
-    icon: Clapperboard,
-    name: "Media & Tech",
-    tagline: "The studio crew",
-    description:
-      "Films aftermovies, produces podcasts and ships the digital tools the cell runs on.",
-    responsibilities: ["Aftermovies", "Podcast production", "Web & tools"],
-  },
-  {
-    id: "hr",
-    icon: Users,
-    name: "Human Resources",
-    tagline: "The culture keepers",
-    description:
-      "Recruits the workforce, onboard new members and keeps the internal culture thriving.",
-    responsibilities: ["Recruitment", "Onboarding", "Culture & bonding"],
-  },
-  {
-    id: "research",
+    id: "research-learning",
     icon: BookOpen,
-    name: "Research",
+    name: "Research & Learning",
     tagline: "The insight engine",
     description:
-      "Studies markets, tracks startups and curates the knowledge base behind our content.",
-    responsibilities: ["Market studies", "Startup reports", "Knowledge base"],
+      "Studies markets and startups, curates knowledge and runs learning sessions for the workforce.",
+    responsibilities: ["Market studies", "Learning sessions", "Knowledge base"],
+  },
+  {
+    id: "administration",
+    icon: ClipboardList,
+    name: "Administration",
+    tagline: "The backbone",
+    description:
+      "Keeps the cell running — documentation, records, internal coordination and faculty liaison.",
+    responsibilities: ["Documentation", "Records", "Coordination"],
+  },
+  {
+    id: "operations-logistics",
+    icon: Package,
+    name: "Operations & Logistics",
+    tagline: "The ground crew",
+    description:
+      "Handles on-ground execution — venues, materials, permissions and everything that moves during events.",
+    responsibilities: ["Venue management", "Materials", "Permissions"],
+  },
+  {
+    id: "filming-documentation",
+    icon: Clapperboard,
+    name: "Filming & Documentation",
+    tagline: "The memory keepers",
+    description:
+      "Films events, cuts aftermovies and documents every chapter of the cell's story.",
+    responsibilities: ["Aftermovies", "Event coverage", "Photo archive"],
   },
 ];
 
@@ -165,8 +165,8 @@ export function Departments({
               Our departments
             </h2>
             <p className="max-w-[33ch] text-[18px] leading-[1.45] tracking-tight text-foreground/65 sm:text-[20px]">
-              Seven teams, one mission. Every event, issue and episode is built
-              by students across these crews.
+              Eight teams, one mission. Every event, issue and episode is
+              built by students across these crews.
             </p>
           </FadeIn>
         ) : null}

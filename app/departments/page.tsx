@@ -8,7 +8,7 @@ import type { ReactNode } from "react";
 export const metadata: Metadata = createMetadata({
   title: "Departments",
   description:
-    "Meet the teams behind E-Cell — events, sponsorship, PR, content, design, media & tech, HR and research.",
+    "Meet the teams behind E-Cell — projects & partnerships, incubation & innovation, sponsorships & finance, PR & creatives, research & learning, administration, operations and filming.",
   path: "/departments",
 });
 

@@ -24,7 +24,7 @@ export default function WorkforcePage(): ReactNode {
             The people behind it all
           </h1>
           <p className="max-w-[36ch] text-[20px] leading-[1.4] tracking-tight text-foreground/65 sm:text-[22px]">
-            Twenty-four students, seven departments, one shared obsession
+            Twenty-four students, eight teams, one shared obsession
             with building things.
           </p>
         </FadeIn>
