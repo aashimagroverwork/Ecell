@@ -1,88 +1,23 @@
-import { ArrowUpRight, Mic, Play, Radio } from "lucide-react";
 import type { ReactNode } from "react";
 
 import { FadeIn } from "@/components/ui/motion-primitives";
-import { siteConfig } from "@/lib/metadata";
+import { Icon, type MaterialSymbolName } from "@/components/ui/icon";
+import type { PodcastEpisode, SocialLinks } from "@/lib/content/types";
 
-type Episode = {
-  id: string;
-  number: string;
-  title: string;
-  guest: string;
-  guestRole: string;
-  duration: string;
-  date: string;
-  excerpt: string;
-};
-
-const EPISODES: Episode[] = [
-  {
-    id: "ep-12",
-    number: "EP 12",
-    title: "Selling chai to a country that runs on it",
-    guest: "Aarav Mehta",
-    guestRole: "Founder, Chai Circuit",
-    duration: "42 min",
-    date: "Aug 2026",
-    excerpt:
-      "From one stall outside campus to 40 outlets — on pricing, pan-wallahs and the myth of the saturated market.",
-  },
-  {
-    id: "ep-11",
-    number: "EP 11",
-    title: "The pitch deck that got rejected 47 times",
-    guest: "Sana Qureshi",
-    guestRole: "Co-founder, Ledgerly",
-    duration: "38 min",
-    date: "Jul 2026",
-    excerpt:
-      "Why rejection number 48 mattered more than the yes, and how to iterate a deck without losing the plot.",
-  },
-  {
-    id: "ep-10",
-    number: "EP 10",
-    title: "Building for Bharat from a Mumbai hostel",
-    guest: "Rohan Iyer",
-    guestRole: "Founder, GramSeva Tech",
-    duration: "45 min",
-    date: "Jun 2026",
-    excerpt:
-      "Agri-tech between lectures — on user research in villages your textbooks have never mentioned.",
-  },
-  {
-    id: "ep-09",
-    number: "EP 09",
-    title: "What VCs actually read in your numbers",
-    guest: "Priya Nair",
-    guestRole: "Principal, Bombay Ventures",
-    duration: "51 min",
-    date: "May 2026",
-    excerpt:
-      "An investor's honest teardown of student pitches — the metrics that matter and the buzzwords that don't.",
-  },
-  {
-    id: "ep-08",
-    number: "EP 08",
-    title: "Quitting the placement to keep the startup",
-    guest: "Devang Shah",
-    guestRole: "Founder, Rentro",
-    duration: "36 min",
-    date: "Apr 2026",
-    excerpt:
-      "A 9 LPA offer letter, two months of leave, and choosing uncertainty over comfort — with receipts.",
-  },
-];
-
-function PlatformLinks(): ReactNode {
-  const platforms = [
-    { label: "Spotify", href: siteConfig.socials.spotify, icon: Radio },
-    { label: "YouTube", href: siteConfig.socials.youtube, icon: Play },
+function PlatformLinks({ socials }: { socials: SocialLinks }): ReactNode {
+  const platforms: {
+    label: string;
+    href: string;
+    icon: MaterialSymbolName;
+  }[] = [
+    { label: "Spotify", href: socials.spotify, icon: "podcasts" },
+    { label: "YouTube", href: socials.youtube, icon: "play_arrow" },
     {
       label: "All platforms",
-      href: siteConfig.socials.podcastFeed,
-      icon: Mic,
+      href: socials.podcastFeed,
+      icon: "rss_feed",
     },
-  ] as const;
+  ];
 
   return (
     <div className="flex flex-wrap items-center justify-center gap-3">
@@ -94,11 +29,11 @@ function PlatformLinks(): ReactNode {
           rel="noopener noreferrer"
           className="focus-ring group inline-flex cursor-pointer items-center gap-2 rounded-xl border border-foreground/8 bg-background px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-foreground/5"
         >
-          <platform.icon className="h-4 w-4" aria-hidden="true" />
+          <Icon name={platform.icon} weight={500} className="text-[18px]" />
           {platform.label}
-          <ArrowUpRight
-            className="h-3.5 w-3.5 text-foreground/40 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-            aria-hidden="true"
+          <Icon
+            name="arrow_outward"
+            className="text-[16px] text-foreground/40 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
           />
         </a>
       ))}
@@ -106,12 +41,16 @@ function PlatformLinks(): ReactNode {
   );
 }
 
-export function PodcastEpisodes(): ReactNode {
+export function PodcastEpisodes({
+  episodes,
+}: {
+  episodes: PodcastEpisode[];
+}): ReactNode {
   return (
     <section className="relative w-full">
       <div className="mx-auto w-full max-w-275 px-6 sm:px-10">
         <div className="flex flex-col gap-4">
-          {EPISODES.map((episode, index) => (
+          {episodes.map((episode, index) => (
             <FadeIn key={episode.id} delay={Math.min(index * 0.05, 0.3)}>
               <article className="project-card flex cursor-pointer flex-col gap-4 rounded-3xl border border-foreground/8 bg-background p-6 sm:flex-row sm:items-center sm:gap-6 sm:p-7">
                 <button
@@ -119,7 +58,7 @@ export function PodcastEpisodes(): ReactNode {
                   aria-label={`Play episode ${episode.number}: ${episode.title}`}
                   className="focus-ring inline-flex h-14 w-14 shrink-0 cursor-pointer items-center justify-center rounded-full bg-foreground text-background transition-transform hover:scale-105"
                 >
-                  <Play className="ml-0.5 h-5 w-5" aria-hidden="true" />
+                  <Icon name="play_arrow" fill className="ml-0.5 text-[22px]" />
                 </button>
 
                 <div className="flex min-w-0 grow flex-col gap-1.5">

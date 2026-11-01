@@ -1,11 +1,11 @@
 "use client";
 
-import { ArrowRight } from "lucide-react";
 import { LayoutGroup, motion } from "motion/react";
 import Link from "next/link";
 import type { ReactNode } from "react";
 
 import { ContactButton } from "@/components/contact/contact-button";
+import { Icon } from "@/components/ui/icon";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -28,9 +28,9 @@ export function HeroCtas(): ReactNode {
             className="border border-foreground/5 focus-ring group inline-flex cursor-pointer items-center gap-2 rounded-xl bg-background px-5 py-2.5 text-sm font-medium text-foreground shadow-2xl transition-colors hover:bg-foreground/4"
           >
             Explore Departments
-            <ArrowRight
-              className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5"
-              aria-hidden="true"
+            <Icon
+              name="arrow_forward"
+              className="text-[18px] transition-transform duration-300 group-hover:translate-x-0.5"
             />
           </Link>
         </motion.div>

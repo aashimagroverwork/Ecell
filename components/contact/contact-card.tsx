@@ -1,16 +1,19 @@
-import { Instagram, Linkedin, Mail, Youtube } from "lucide-react";
 import Link from "next/link";
 import type { ReactNode } from "react";
 
 import { ContactCardCtas } from "./contact-card-ctas";
+import { BrandIcon, type BrandName } from "@/components/ui/brand-icon";
+import { Icon } from "@/components/ui/icon";
 import { FadeIn } from "@/components/ui/motion-primitives";
 import { ShaderFlow } from "@/components/shaders/shader-flow";
-import { siteConfig } from "@/lib/metadata";
+import { getContent } from "@/lib/content/get-content";
 
 const CARD_FADE_MASK =
   "radial-gradient(ellipse 90% 110% at 50% 50%, rgba(0,0,0,1) 0%, rgba(0,0,0,0.92) 40%, rgba(0,0,0,0.7) 70%, rgba(0,0,0,0.4) 90%, rgba(0,0,0,0.15) 100%)";
 
-export function ContactCard(): ReactNode {
+export async function ContactCard(): Promise<ReactNode> {
+  const { siteConfig } = await getContent();
+
   return (
     <section className="mx-auto my-12 w-full max-w-275 px-6 sm:my-20 sm:px-10">
       <FadeIn>
@@ -29,14 +32,14 @@ export function ContactCard(): ReactNode {
 
             <div className="relative grid gap-8 p-6 sm:gap-10 sm:p-7 md:grid-cols-[1.2fr_1fr] md:items-stretch md:gap-6 md:p-6">
               <div className="flex flex-col gap-5">
-                <h2 className="font-serif text-[2.25rem] font-medium leading-[1.05] tracking-tight text-foreground sm:text-[2.75rem] lg:text-[3.25rem]">
+                <h2 className="font-serif text-[2.375rem] font-semibold leading-[1.05] tracking-tight text-foreground sm:text-[2.875rem] lg:text-[3.375rem]">
                   Build with us
                 </h2>
                 <p className="mb-6 max-w-[29ch] text-[18px] leading-[1.4] tracking-tight text-foreground/65 sm:text-[22px]">
                   Whether you have a startup idea, a collaboration pitch or
-                  just curiosity — we would love to hear from you.
+                  just curiosity, we would love to hear from you.
                 </p>
-                <ContactCardCtas />
+                <ContactCardCtas email={siteConfig.email} />
               </div>
 
               <div className="flex flex-col items-center justify-center gap-6 rounded-[1.1rem] border border-foreground/8 bg-background p-6 sm:p-8">
@@ -44,22 +47,22 @@ export function ContactCard(): ReactNode {
                   <SocialIcon
                     href={`mailto:${siteConfig.email}`}
                     label="Email"
-                    lucideIcon={Mail}
+                    material="mail"
                   />
                   <SocialIcon
                     href={siteConfig.socials.instagram}
                     label="Instagram"
-                    lucideIcon={Instagram}
+                    brand="instagram"
                   />
                   <SocialIcon
                     href={siteConfig.socials.linkedin}
                     label="LinkedIn"
-                    lucideIcon={Linkedin}
+                    brand="linkedin"
                   />
                   <SocialIcon
                     href={siteConfig.socials.youtube}
                     label="YouTube"
-                    lucideIcon={Youtube}
+                    brand="youtube"
                   />
                 </div>
                 <div className="flex flex-col items-center gap-1 text-center">
@@ -82,11 +85,13 @@ export function ContactCard(): ReactNode {
 function SocialIcon({
   href,
   label,
-  lucideIcon: LucideIcon,
+  material,
+  brand,
 }: {
   href: string;
   label: string;
-  lucideIcon: React.ComponentType<{ className?: string; strokeWidth?: number }>;
+  material?: Parameters<typeof Icon>[0]["name"];
+  brand?: BrandName;
 }): ReactNode {
   const isExternal = href.startsWith("http");
   const props = isExternal
@@ -99,7 +104,11 @@ function SocialIcon({
       className="focus-ring inline-flex h-11 w-11 items-center justify-center rounded-xl border border-foreground/8 bg-background text-foreground/70 transition-colors hover:border-foreground/15 hover:text-foreground"
       {...props}
     >
-      <LucideIcon className="h-4 w-4" strokeWidth={2.5} aria-hidden="true" />
+      {brand ? (
+        <BrandIcon name={brand} className="h-[18px] w-[18px]" />
+      ) : (
+        <Icon name={material ?? "mail"} weight={500} className="text-[20px]" />
+      )}
     </Link>
   );
 }

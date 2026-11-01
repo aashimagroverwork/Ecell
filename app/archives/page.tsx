@@ -1,22 +1,22 @@
-import { ArrowUpRight, Clapperboard, CalendarDays, Users } from "lucide-react";
-import type { ComponentType, ReactNode } from "react";
+import type { ReactNode } from "react";
 import Link from "next/link";
 import type { Metadata } from "next";
 
 import { ContactCard } from "@/components/contact/contact-card";
 import { FadeIn } from "@/components/ui/motion-primitives";
+import { Icon, type MaterialSymbolName } from "@/components/ui/icon";
 import { createMetadata } from "@/lib/metadata";
 
 export const metadata: Metadata = createMetadata({
   title: "Archives",
   description:
-    "The E-Cell archive — our workforce across the years, every event we have run, and all the aftermovies in between.",
+    "The E-Cell archive: our workforce across the years, every event we have run, and all the aftermovies in between.",
   path: "/archives",
 });
 
 type ArchiveLink = {
   href: string;
-  icon: ComponentType<{ className?: string }>;
+  icon: MaterialSymbolName;
   title: string;
   description: string;
   meta: string;
@@ -25,26 +25,26 @@ type ArchiveLink = {
 const ARCHIVE_LINKS: ArchiveLink[] = [
   {
     href: "/archives/workforce",
-    icon: Users,
+    icon: "groups",
     title: "Workforce",
     description:
-      "The people behind every event, issue and episode — core council, leads and associates.",
+      "The people behind every event, issue and episode: core council, leads and associates.",
     meta: "24 members",
   },
   {
     href: "/archives/events",
-    icon: CalendarDays,
+    icon: "event",
     title: "Past Events & Works",
     description:
-      "A running record of everything we have organised since day one — fests, competitions, workshops and talks.",
+      "A running record of everything we have organised since day one: fests, competitions, workshops and talks.",
     meta: "2024 – 2026",
   },
   {
     href: "/archives/aftermovie",
-    icon: Clapperboard,
+    icon: "movie",
     title: "Aftermovie",
     description:
-      "The highlight reels our media crew cuts after every flagship — proof that we work hard and film harder.",
+      "The highlight reels our media crew cuts after every flagship: proof that we work hard and film harder.",
     meta: "3 films",
   },
 ];
@@ -54,7 +54,7 @@ export default function ArchivesPage(): ReactNode {
     <main id="main-content" className="flex flex-1 flex-col">
       <section className="mx-auto w-full max-w-275 px-6 pt-44 pb-16 sm:px-10 sm:pt-100 sm:pb-20">
         <FadeIn className="flex flex-col items-center gap-5 text-center">
-          <h1 className="font-serif text-[2.75rem] font-medium leading-[1.05] tracking-tight text-foreground md:text-[3.25rem] lg:text-[3.75rem]">
+          <h1 className="font-serif text-[2.875rem] font-semibold leading-[1.05] tracking-tight text-foreground md:text-[3.375rem] lg:text-[3.875rem]">
             The archive
           </h1>
           <p className="max-w-[36ch] text-[20px] leading-[1.4] tracking-tight text-foreground/65 sm:text-[22px]">
@@ -73,9 +73,10 @@ export default function ArchivesPage(): ReactNode {
                 className="project-card focus-ring group grid grid-cols-[auto_1fr_auto] items-center gap-5 rounded-4xl border border-foreground/8 bg-background p-6 sm:gap-8 sm:p-8"
               >
                 <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-foreground/10 bg-background">
-                  <link.icon
-                    className="h-5 w-5 text-foreground"
-                    aria-hidden="true"
+                  <Icon
+                    name={link.icon}
+                    weight={500}
+                    className="text-[24px] text-foreground"
                   />
                 </span>
                 <span className="flex min-w-0 flex-col gap-1.5">
@@ -89,9 +90,9 @@ export default function ArchivesPage(): ReactNode {
                     {link.meta}
                   </span>
                 </span>
-                <ArrowUpRight
-                  className="h-6 w-6 shrink-0 text-foreground/35 transition-all duration-300 group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-foreground"
-                  aria-hidden="true"
+                <Icon
+                  name="arrow_outward"
+                  className="text-[24px] shrink-0 text-foreground/35 transition-all duration-300 group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-foreground"
                 />
               </Link>
             </FadeIn>

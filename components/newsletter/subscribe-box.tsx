@@ -1,7 +1,8 @@
 "use client";
 
-import { ArrowRight, Check, Mail } from "lucide-react";
 import { useState, type FormEvent, type ReactNode } from "react";
+
+import { Icon } from "@/components/ui/icon";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -19,7 +20,7 @@ export function SubscribeBox(): ReactNode {
     return (
       <div className="flex items-center justify-center gap-2 rounded-xl border border-foreground/8 bg-background px-5 py-3 text-sm font-medium text-foreground">
         <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-foreground text-background">
-          <Check className="h-3 w-3" aria-hidden="true" />
+          <Icon name="check" className="text-[13px]" />
         </span>
         You&rsquo;re on the list. See you in the next issue.
       </div>
@@ -35,9 +36,9 @@ export function SubscribeBox(): ReactNode {
         Email address
       </label>
       <div className="relative grow">
-        <Mail
-          className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-foreground/40"
-          aria-hidden="true"
+        <Icon
+          name="mail"
+          className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-[18px] text-foreground/40"
         />
         <input
           id="newsletter-email"
@@ -54,9 +55,9 @@ export function SubscribeBox(): ReactNode {
         className="focus-ring group inline-flex h-11 cursor-pointer items-center justify-center gap-2 rounded-xl bg-foreground px-5 text-sm font-medium text-background transition-opacity hover:opacity-90"
       >
         Subscribe
-        <ArrowRight
-          className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5"
-          aria-hidden="true"
+        <Icon
+          name="arrow_forward"
+          className="text-[18px] transition-transform duration-300 group-hover:translate-x-0.5"
           style={{ transitionTimingFunction: `cubic-bezier(${EASE.join(",")})` }}
         />
       </button>

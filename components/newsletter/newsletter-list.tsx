@@ -1,80 +1,19 @@
-import { ArrowUpRight } from "lucide-react";
 import type { ReactNode } from "react";
 
 import { FadeIn } from "@/components/ui/motion-primitives";
+import { Icon } from "@/components/ui/icon";
+import type { NewsletterIssue } from "@/lib/content/types";
 
-type Issue = {
-  id: string;
-  index: string;
-  title: string;
-  date: string;
-  tags: string[];
-  excerpt: string;
-};
-
-const ISSUES: Issue[] = [
-  {
-    id: "quick-commerce",
-    index: "Vol. V · Issue 04",
-    title: "The 10-Minute Economy",
-    date: "Aug 2026",
-    tags: ["Quick commerce", "Unit economics"],
-    excerpt:
-      "How dark stores rewired Mumbai's grocery habits, and what the unit economics actually look like when delivery gets faster than the elevator.",
-  },
-  {
-    id: "bootstrap-bharat",
-    index: "Vol. V · Issue 03",
-    title: "Bootstrapping in Bharat",
-    date: "Jul 2026",
-    tags: ["Bootstrapping", "Tier-2 India"],
-    excerpt:
-      "Founders outside the funding circuit on profitable from day one, growing slow, and why their churn is enviable.",
-  },
-  {
-    id: "creator-economy",
-    index: "Vol. V · Issue 02",
-    title: "Creators Are the New Distributors",
-    date: "Jun 2026",
-    tags: ["Creator economy", "D2C"],
-    excerpt:
-      "Why D2C brands are hiring influencers before engineers, and how attention became the cheapest customer acquisition channel.",
-  },
-  {
-    id: "student-startups",
-    index: "Vol. V · Issue 01",
-    title: "From Classroom to Cap Table",
-    date: "May 2026",
-    tags: ["Student founders", "Campus ventures"],
-    excerpt:
-      "Six startups that began as semester projects at St. Xavier's — and what happened after the grades came in.",
-  },
-  {
-    id: "ai-stack",
-    index: "Vol. IV · Issue 12",
-    title: "Everyone Is an AI Company Now",
-    date: "Apr 2026",
-    tags: ["AI", "SaaS"],
-    excerpt:
-      "A field guide to separating the thin wrappers from the real moats, with a checklist investors actually use.",
-  },
-  {
-    id: "funding-winter",
-    index: "Vol. IV · Issue 11",
-    title: "Surviving the Funding Winter",
-    date: "Mar 2026",
-    tags: ["Venture capital", "Runway"],
-    excerpt:
-      "Founders who raised in 2021 and cut costs in 2024 share the playbook nobody put in their pitch deck.",
-  },
-];
-
-export function NewsletterList(): ReactNode {
+export function NewsletterList({
+  issues,
+}: {
+  issues: NewsletterIssue[];
+}): ReactNode {
   return (
     <section className="relative w-full">
       <div className="mx-auto w-full max-w-275 px-6 sm:px-10">
         <div className="flex flex-col gap-4">
-          {ISSUES.map((issue, index) => (
+          {issues.map((issue, index) => (
             <FadeIn key={issue.id} delay={Math.min(index * 0.05, 0.3)}>
               <article className="project-card group flex cursor-pointer flex-col gap-3 rounded-3xl border border-foreground/8 bg-background p-6 sm:flex-row sm:items-center sm:gap-8 sm:p-7">
                 <p className="shrink-0 font-mono text-[11px] uppercase tracking-[0.18em] text-foreground/50 sm:w-36">
@@ -104,9 +43,9 @@ export function NewsletterList(): ReactNode {
                   </p>
                   <span className="inline-flex items-center gap-1 text-sm font-medium text-foreground/70 transition-colors group-hover:text-foreground">
                     Read issue
-                    <ArrowUpRight
-                      className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-                      aria-hidden="true"
+                    <Icon
+                      name="arrow_outward"
+                      className="text-[18px] transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
                     />
                   </span>
                 </div>

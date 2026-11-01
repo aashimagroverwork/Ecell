@@ -1,102 +1,19 @@
-import {
-  ArrowRight,
-  BookOpen,
-  Clapperboard,
-  ClipboardList,
-  Handshake,
-  Landmark,
-  Lightbulb,
-  Megaphone,
-  Package,
-} from "lucide-react";
-import type { ComponentType, ReactNode } from "react";
+import type { ReactNode } from "react";
 import Link from "next/link";
 
 import { FadeIn } from "@/components/ui/motion-primitives";
+import { Icon } from "@/components/ui/icon";
+import { PersonRow } from "@/components/people/person-row";
+import type { Department, Person } from "@/lib/content/types";
 
-type Department = {
-  id: string;
-  icon: ComponentType<{ className?: string }>;
-  name: string;
-  tagline: string;
-  description: string;
-  responsibilities: string[];
-};
-
-export const DEPARTMENTS: Department[] = [
-  {
-    id: "projects-partnerships",
-    icon: Handshake,
-    name: "Projects & Partnerships",
-    tagline: "The connectors",
-    description:
-      "Conceptualises flagship projects and builds lasting partnerships with startups, VCs and student communities.",
-    responsibilities: ["Flagship projects", "Partner network", "Collaborations"],
-  },
-  {
-    id: "incubation-innovation",
-    icon: Lightbulb,
-    name: "Incubation & Innovation",
-    tagline: "The startup nursery",
-    description:
-      "Guides student ventures from idea to launch through mentorship, incubation drives and innovation challenges.",
-    responsibilities: ["Startup incubation", "Mentor network", "Innovation challenges"],
-  },
-  {
-    id: "sponsorships-finance",
-    icon: Landmark,
-    name: "Sponsorships & Finance",
-    tagline: "The money managers",
-    description:
-      "Raises funds from brands and manages every rupee of the cell's budget with full transparency.",
-    responsibilities: ["Brand outreach", "Sponsor decks", "Budgeting"],
-  },
-  {
-    id: "pr-creatives",
-    icon: Megaphone,
-    name: "PR & Creatives",
-    tagline: "The voice & the look",
-    description:
-      "Owns the cell's voice and visual identity — social media, campus buzz, posters and brand creatives.",
-    responsibilities: ["Social media", "Campus publicity", "Creatives"],
-  },
-  {
-    id: "research-learning",
-    icon: BookOpen,
-    name: "Research & Learning",
-    tagline: "The insight engine",
-    description:
-      "Studies markets and startups, curates knowledge and runs learning sessions for the workforce.",
-    responsibilities: ["Market studies", "Learning sessions", "Knowledge base"],
-  },
-  {
-    id: "administration",
-    icon: ClipboardList,
-    name: "Administration",
-    tagline: "The backbone",
-    description:
-      "Keeps the cell running — documentation, records, internal coordination and faculty liaison.",
-    responsibilities: ["Documentation", "Records", "Coordination"],
-  },
-  {
-    id: "operations-logistics",
-    icon: Package,
-    name: "Operations & Logistics",
-    tagline: "The ground crew",
-    description:
-      "Handles on-ground execution — venues, materials, permissions and everything that moves during events.",
-    responsibilities: ["Venue management", "Materials", "Permissions"],
-  },
-  {
-    id: "filming-documentation",
-    icon: Clapperboard,
-    name: "Filming & Documentation",
-    tagline: "The memory keepers",
-    description:
-      "Films events, cuts aftermovies and documents every chapter of the cell's story.",
-    responsibilities: ["Aftermovies", "Event coverage", "Photo archive"],
-  },
+const PEOPLE_GROUPS: { key: "heads" | "subheads"; label: string }[] = [
+  { key: "heads", label: "Heads" },
+  { key: "subheads", label: "Subheads" },
 ];
+
+function hasPeople(department: Department): boolean {
+  return PEOPLE_GROUPS.some((group) => department[group.key].length > 0);
+}
 
 function DepartmentCard({
   department,
@@ -105,7 +22,7 @@ function DepartmentCard({
   department: Department;
   index: number;
 }): ReactNode {
-  const Icon = department.icon;
+  const iconName = department.icon;
   return (
     <FadeIn
       delay={Math.min(index * 0.06, 0.3)}
@@ -114,7 +31,7 @@ function DepartmentCard({
       <article className="project-card flex flex-col gap-4 rounded-3xl border border-foreground/8 bg-background p-5 sm:p-6">
         <header className="flex items-center gap-3">
           <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-foreground/10 bg-background">
-            <Icon className="h-4 w-4 text-foreground" aria-hidden="true" />
+            <Icon name={iconName} weight={500} className="text-[20px] text-foreground" />
           </span>
           <div className="flex min-w-0 flex-col">
             <h3 className="text-[18px] font-medium leading-tight tracking-tight text-foreground sm:text-[20px]">
@@ -146,22 +63,85 @@ function DepartmentCard({
 }
 
 export type DepartmentsProps = {
+  departments: Department[];
+  core: Person[];
   withHeadline?: boolean;
   viewMoreVisible?: boolean;
 };
 
+function PeopleSection({
+  title,
+  people,
+}: {
+  title: string;
+  people: Person[];
+}): ReactNode {
+  return (
+    <div className="flex flex-col gap-4">
+      <FadeIn className="flex flex-col gap-2">
+        <h2 className="font-serif text-[1.875rem] font-medium tracking-tight text-foreground sm:text-[2.125rem]">
+          {title}
+        </h2>
+        <span className="h-px w-full bg-foreground/8" />
+      </FadeIn>
+      <div className="flex flex-col gap-3">
+        {people.map((person, index) => (
+          <FadeIn key={`${person.name}-${index}`} delay={Math.min(index * 0.03, 0.2)}>
+            <PersonRow person={person} />
+          </FadeIn>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function DepartmentPeople({ department }: { department: Department }): ReactNode {
+  if (!hasPeople(department)) return null;
+
+  return (
+    <FadeIn className="flex flex-col gap-8 border-t border-foreground/8 pt-12 sm:pt-16">
+      <h2 className="font-serif text-[1.875rem] font-medium tracking-tight text-foreground sm:text-[2.125rem]">
+        {department.name}
+      </h2>
+      {PEOPLE_GROUPS.map((group) => {
+        const people = department[group.key];
+        if (people.length === 0) return null;
+        return (
+          <div key={group.key} className="flex flex-col gap-3">
+            <h3 className="font-mono text-[11px] uppercase tracking-[0.22em] text-foreground/45">
+              {group.label}
+            </h3>
+            <div className="flex flex-col gap-3">
+              {people.map((person, index) => (
+                <FadeIn
+                  key={`${person.name}-${index}`}
+                  delay={Math.min(index * 0.03, 0.2)}
+                >
+                  <PersonRow person={person} />
+                </FadeIn>
+              ))}
+            </div>
+          </div>
+        );
+      })}
+    </FadeIn>
+  );
+}
+
 export function Departments({
+  departments,
+  core,
   withHeadline = false,
   viewMoreVisible = false,
 }: DepartmentsProps): ReactNode {
-  const items = viewMoreVisible ? DEPARTMENTS.slice(0, 4) : DEPARTMENTS;
+  const items = viewMoreVisible ? departments.slice(0, 4) : departments;
 
   return (
     <section className="relative w-full">
       <div className="mx-auto w-full max-w-275 px-6 sm:px-10">
         {withHeadline ? (
           <FadeIn className="flex flex-col items-center gap-5 pt-12 pb-10 text-center sm:pt-20 sm:pb-14">
-            <h2 className="font-serif text-[2.5rem] font-medium leading-[1.05] tracking-tight text-foreground md:text-[3rem] lg:text-[3.5rem]">
+            <h2 className="font-serif text-[2.625rem] font-semibold leading-[1.05] tracking-tight text-foreground md:text-[3.125rem] lg:text-[3.625rem]">
               Our departments
             </h2>
             <p className="max-w-[33ch] text-[18px] leading-[1.45] tracking-tight text-foreground/65 sm:text-[20px]">
@@ -180,6 +160,16 @@ export function Departments({
             />
           ))}
         </div>
+        {!viewMoreVisible ? (
+          <div className="mt-14 flex flex-col gap-14 sm:mt-20 sm:gap-20">
+            {core.length > 0 ? (
+              <PeopleSection title="Core" people={core} />
+            ) : null}
+            {items.map((department) => (
+              <DepartmentPeople key={department.id} department={department} />
+            ))}
+          </div>
+        ) : null}
 
         {viewMoreVisible ? (
           <div className="mt-12 flex justify-center sm:mt-16">
@@ -188,9 +178,9 @@ export function Departments({
               className="focus-ring group inline-flex cursor-pointer items-center gap-2 rounded-xl border border-foreground/8 bg-background px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-foreground/5"
             >
               View all departments
-              <ArrowRight
-                className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5"
-                aria-hidden="true"
+              <Icon
+                name="arrow_forward"
+                className="text-[18px] transition-transform duration-300 group-hover:translate-x-0.5"
               />
             </Link>
           </div>

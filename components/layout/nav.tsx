@@ -1,6 +1,5 @@
 "use client";
 
-import { Menu, Moon, Sun, X } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { useTheme } from "next-themes";
 import Link from "next/link";
@@ -13,6 +12,8 @@ import {
   useSyncExternalStore,
   type ReactNode,
 } from "react";
+
+import { Icon } from "@/components/ui/icon";
 
 type NavItem = {
   label: string;
@@ -102,15 +103,17 @@ function NavThemeToggle(): ReactNode {
       className="focus-ring relative inline-flex h-8 w-8 shrink-0 cursor-pointer items-center justify-center rounded-full bg-background ring-1 ring-foreground/8 transition-colors"
     >
       <span aria-hidden="true" className="relative h-4 w-4">
-        <Sun
-          className={`absolute inset-0 h-4 w-4 text-foreground transition-all duration-300 ${
+        <Icon
+          name="light_mode"
+          className={`absolute inset-0 flex items-center justify-center text-[16px] text-foreground transition-all duration-300 ${
             mounted && isDark
               ? "rotate-0 scale-100 opacity-100"
               : "-rotate-90 scale-0 opacity-0"
           }`}
         />
-        <Moon
-          className={`absolute inset-0 h-4 w-4 text-foreground transition-all duration-300 ${
+        <Icon
+          name="dark_mode"
+          className={`absolute inset-0 flex items-center justify-center text-[16px] text-foreground transition-all duration-300 ${
             mounted && !isDark
               ? "rotate-0 scale-100 opacity-100"
               : "rotate-90 scale-0 opacity-0"
@@ -259,9 +262,9 @@ export function Nav(): ReactNode {
           className="focus-ring relative inline-flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-background ring-1 ring-foreground/8 transition-colors md:hidden"
         >
           {menuOpen ? (
-            <X className="h-4 w-4 text-foreground" aria-hidden="true" />
+            <Icon name="close" className="text-[18px] text-foreground" />
           ) : (
-            <Menu className="h-4 w-4 text-foreground" aria-hidden="true" />
+            <Icon name="menu" className="text-[18px] text-foreground" />
           )}
         </button>
       </div>

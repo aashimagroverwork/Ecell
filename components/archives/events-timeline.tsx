@@ -1,92 +1,7 @@
 import type { ReactNode } from "react";
 
 import { FadeIn } from "@/components/ui/motion-primitives";
-
-type PastEvent = {
-  title: string;
-  date: string;
-  type: "Fest" | "Competition" | "Workshop" | "Talk" | "Expo";
-  summary: string;
-};
-
-type YearGroup = {
-  year: string;
-  events: PastEvent[];
-};
-
-const ARCHIVE: YearGroup[] = [
-  {
-    year: "2026",
-    events: [
-      {
-        title: "E-Summit '26",
-        date: "Feb 2026",
-        type: "Fest",
-        summary:
-          "Two days, 5,000+ attendees, 32 speaker sessions and a startup expo that spilled out of the hall.",
-      },
-      {
-        title: "Pitch Perfect Winter Edition",
-        date: "Jan 2026",
-        type: "Competition",
-        summary:
-          "18 student ventures pitched to a panel of founders; three walked away with incubation offers.",
-      },
-    ],
-  },
-  {
-    year: "2025",
-    events: [
-      {
-        title: "Fireside with a Unicorn CTO",
-        date: "Nov 2025",
-        type: "Talk",
-        summary:
-          "An evening on scaling engineering teams from 4 to 400 — and what breaks along the way.",
-      },
-      {
-        title: "Zero to One Workshop Series",
-        date: "Aug 2025",
-        type: "Workshop",
-        summary:
-          "A four-weekend sprint covering idea validation, MVP building, basic finance and pitch craft.",
-      },
-      {
-        title: "E-Summit '25",
-        date: "Feb 2025",
-        type: "Fest",
-        summary:
-          "Our biggest edition yet — 40+ startups exhibited, 12 competitions ran in parallel across campus.",
-      },
-    ],
-  },
-  {
-    year: "2024",
-    events: [
-      {
-        title: "Campus Startup Expo",
-        date: "Oct 2024",
-        type: "Expo",
-        summary:
-          "Student-run stalls took over the quadrangle for a day of demos, feedback and first customers.",
-      },
-      {
-        title: "Pitch Perfect Monsoon Edition",
-        date: "Jul 2024",
-        type: "Competition",
-        summary:
-          "The B-plan competition that started as a classroom experiment drew 60+ team registrations.",
-      },
-      {
-        title: "Women in Entrepreneurship Panel",
-        date: "Mar 2024",
-        type: "Talk",
-        summary:
-          "Five founders on fundraising bias, bootstrapping and building networks from scratch.",
-      },
-    ],
-  },
-];
+import type { EventYearGroup, PastEvent } from "@/lib/content/types";
 
 const TYPE_STYLES: Record<PastEvent["type"], string> = {
   Fest: "bg-foreground text-background",
@@ -96,14 +11,14 @@ const TYPE_STYLES: Record<PastEvent["type"], string> = {
   Expo: "ring-1 ring-foreground/20",
 };
 
-export function EventsTimeline(): ReactNode {
+export function EventsTimeline({ groups }: { groups: EventYearGroup[] }): ReactNode {
   return (
     <section className="relative w-full">
       <div className="mx-auto flex w-full max-w-160 flex-col gap-16 px-6 pb-8 sm:px-10 sm:gap-20">
-        {ARCHIVE.map((group) => (
+        {groups.map((group) => (
           <div key={group.year} className="flex flex-col gap-6">
             <FadeIn className="flex items-center gap-4">
-              <h2 className="font-serif text-[2rem] font-medium leading-none tracking-tight text-foreground sm:text-[2.5rem]">
+              <h2 className="font-serif text-[2.125rem] font-semibold leading-none tracking-tight text-foreground sm:text-[2.625rem]">
                 {group.year}
               </h2>
               <span aria-hidden="true" className="h-px grow bg-foreground/10" />

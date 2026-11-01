@@ -3,12 +3,18 @@ import type { ReactNode } from "react";
 import { HeroCtas } from "./hero-ctas";
 import { FadeIn, ScaleUnblur } from "@/components/ui/motion-primitives";
 import { ShaderFlow } from "@/components/shaders/shader-flow";
-import { siteConfig } from "@/lib/metadata";
+import type { Hero as HeroContent } from "@/lib/content/types";
 
 const HERO_CARD_MASK =
   "radial-gradient(ellipse 90% 110% at 50% 50%, rgba(0,0,0,1) 0%, rgba(0,0,0,0.92) 40%, rgba(0,0,0,0.7) 70%, rgba(0,0,0,0.4) 90%, rgba(0,0,0,0.15) 100%)";
 
-export function Hero(): ReactNode {
+export function Hero({
+  hero,
+  siteName,
+}: {
+  hero: HeroContent;
+  siteName: string;
+}): ReactNode {
   return (
     <section className="relative w-full">
       <div className="mx-auto w-full max-w-275 px-6 pt-44 pb-24 sm:px-10 sm:pt-56 sm:pb-32">
@@ -19,21 +25,16 @@ export function Hero(): ReactNode {
                 aria-hidden="true"
                 className="h-1.5 w-1.5 rounded-full bg-foreground"
               />
-              {siteConfig.fullName}
+              {siteName}
             </p>
 
-            <h1 className="text-[2.75rem] font-medium leading-[1.05] tracking-tight text-foreground md:text-[2.5rem] lg:text-[3.65rem]">
-              <span className="block whitespace-nowrap">
-                Where bold ideas
-              </span>
-              <span className="block whitespace-nowrap">
-                become ventures
-              </span>
+            <h1 className="text-[2.75rem] font-medium leading-[1.05] tracking-tight text-foreground md:text-[2.625rem] lg:text-[3.65rem]">
+              <span className="block whitespace-nowrap">{hero.headingLine1}</span>
+              <span className="block whitespace-nowrap">{hero.headingLine2}</span>
             </h1>
 
             <p className="max-w-[34ch] text-[22px] leading-[1.4] tracking-tight text-foreground/65">
-              A student-run community of builders, dreamers and doers turning
-              campus curiosity into real startups.
+              {hero.subhead}
             </p>
 
             <HeroCtas />
@@ -54,9 +55,9 @@ export function Hero(): ReactNode {
                 </div>
                 <div className="relative flex h-full w-full flex-col items-center justify-center gap-4 text-center">
                   <p className="font-mono text-[11px] uppercase tracking-[0.25em] text-foreground/60">
-                    St. Xavier&rsquo;s College · Mumbai
+                    {hero.cardTop}
                   </p>
-                  <p className="font-serif text-6xl font-medium italic leading-none tracking-tight text-foreground sm:text-7xl">
+                  <p className="font-serif text-6xl font-semibold italic leading-none tracking-tight text-foreground sm:text-7xl">
                     E<span aria-hidden="true" className="mx-1 not-italic">·</span>Cell
                   </p>
                   <div
@@ -68,7 +69,7 @@ export function Hero(): ReactNode {
                     <span className="h-px w-8 bg-current" />
                   </div>
                   <p className="font-mono text-[11px] uppercase tracking-[0.25em] text-foreground/60">
-                    Est. 2012 · By students, for founders
+                    {hero.cardBottom}
                   </p>
                 </div>
               </div>

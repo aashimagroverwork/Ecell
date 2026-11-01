@@ -1,31 +1,32 @@
 "use client";
 
 import { AnimatePresence, motion } from "motion/react";
-import { Check, Copy, Mail } from "lucide-react";
 import { useState } from "react";
 import type { ReactNode } from "react";
 
+import { Icon } from "@/components/ui/icon";
 import { siteConfig } from "@/lib/metadata";
 
-const EMAIL: string = siteConfig.email;
 const EASE = [0.22, 1, 0.36, 1] as const;
 
 export function ContactButton({
   label = "Get in touch",
+  email = siteConfig.email,
 }: {
   label?: string;
+  email?: string;
 }): ReactNode {
   const [open, setOpen] = useState(false);
   const [copied, setCopied] = useState(false);
 
   const handleCopy = async (): Promise<void> => {
     try {
-      await navigator.clipboard.writeText(EMAIL);
+      await navigator.clipboard.writeText(email);
       setCopied(true);
       window.setTimeout(() => setCopied(false), 1600);
     } catch {
       const ta = document.createElement("textarea");
-      ta.value = EMAIL;
+      ta.value = email;
       ta.style.position = "fixed";
       ta.style.opacity = "0";
       document.body.appendChild(ta);
@@ -49,7 +50,7 @@ export function ContactButton({
       onFocus={() => setOpen(true)}
       onBlur={() => setOpen(false)}
       aria-label={
-        copied ? "Email copied" : open ? `Copy ${EMAIL}` : label
+        copied ? "Email copied" : open ? `Copy ${email}` : label
       }
       transition={{ layout: { duration: 0.55, ease: EASE } }}
       style={{ borderRadius: 12 }}
@@ -81,7 +82,7 @@ export function ContactButton({
                       transition={{ duration: 0.2, ease: EASE }}
                       className="inline-flex"
                     >
-                      <Check className="h-4 w-4" aria-hidden="true" />
+                      <Icon name="check" className="text-[16px]" />
                     </motion.span>
                   ) : (
                     <motion.span
@@ -92,12 +93,12 @@ export function ContactButton({
                       transition={{ duration: 0.2, ease: EASE }}
                       className="inline-flex"
                     >
-                      <Copy className="h-4 w-4" aria-hidden="true" />
+                      <Icon name="content_copy" className="text-[16px]" />
                     </motion.span>
                   )}
                 </AnimatePresence>
               </span>
-              <span className="tabular-nums">{EMAIL}</span>
+              <span className="tabular-nums">{email}</span>
             </motion.span>
           ) : (
             <motion.span
@@ -109,7 +110,7 @@ export function ContactButton({
               transition={{ duration: 0.35, ease: EASE }}
               className="inline-flex items-center gap-2 whitespace-nowrap"
             >
-              <Mail className="h-4 w-4 shrink-0" aria-hidden="true" />
+              <Icon name="mail" className="text-[16px]" />
               <span>{label}</span>
             </motion.span>
           )}

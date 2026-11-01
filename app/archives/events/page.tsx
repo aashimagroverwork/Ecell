@@ -1,6 +1,7 @@
 import { ContactCard } from "@/components/contact/contact-card";
 import { EventsTimeline } from "@/components/archives/events-timeline";
 import { FadeIn } from "@/components/ui/motion-primitives";
+import { getContent } from "@/lib/content/get-content";
 import { createMetadata } from "@/lib/metadata";
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
@@ -12,7 +13,11 @@ export const metadata: Metadata = createMetadata({
   path: "/archives/events",
 });
 
-export default function PastEventsPage(): ReactNode {
+export const dynamic = "force-dynamic";
+
+export default async function PastEventsPage(): Promise<ReactNode> {
+  const content = await getContent();
+
   return (
     <main id="main-content" className="flex flex-1 flex-col">
       <section className="mx-auto w-full max-w-275 px-6 pt-44 pb-16 sm:px-10 sm:pt-100 sm:pb-20">
@@ -20,7 +25,7 @@ export default function PastEventsPage(): ReactNode {
           <p className="font-mono text-[11px] uppercase tracking-[0.25em] text-foreground/50">
             Archives · Events & Works
           </p>
-          <h1 className="font-serif text-[2.75rem] font-medium leading-[1.05] tracking-tight text-foreground md:text-[3.25rem] lg:text-[3.75rem]">
+          <h1 className="font-serif text-[2.875rem] font-semibold leading-[1.05] tracking-tight text-foreground md:text-[3.375rem] lg:text-[3.875rem]">
             Everything we&rsquo;ve run
           </h1>
           <p className="max-w-[36ch] text-[20px] leading-[1.4] tracking-tight text-foreground/65 sm:text-[22px]">
@@ -29,7 +34,7 @@ export default function PastEventsPage(): ReactNode {
           </p>
         </FadeIn>
       </section>
-      <EventsTimeline />
+      <EventsTimeline groups={content.eventsArchive} />
       <ContactCard />
       <div className="h-12 sm:h-16" />
     </main>

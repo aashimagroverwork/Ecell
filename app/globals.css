@@ -3,26 +3,28 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  --background: #ffffff;
-  --foreground: #0a0a0a;
-  --muted: #f5f5f5;
-  --muted-foreground: #737373;
-  --border: #e5e5e5;
-  --ring: #0066ff;
-  --frame: #ffffff;
-  --font-sans: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
-  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
-  --font-serif: var(--font-fraunces), ui-serif, Georgia, serif;
+  --background: #f2f0e8;
+  --foreground: #07161e;
+  --muted: #e7e4d9;
+  --muted-foreground: #6f7c80;
+  --border: #6f7c80;
+  --accent: #7899ad;
+  --ring: #6f7c80;
+  --frame: #f2f0e8;
+  --font-sans: var(--font-inter), system-ui, -apple-system, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+  --font-serif: var(--font-playfair), ui-serif, Georgia, serif;
 }
 
 .dark {
-  --background: #0a0a0a;
-  --foreground: #fafafa;
-  --muted: #171717;
-  --muted-foreground: #a3a3a3;
-  --border: #262626;
-  --ring: #3b82f6;
-  --frame: #0a0a0a;
+  --background: #07161e;
+  --foreground: #f2f0e8;
+  --muted: #0e2731;
+  --muted-foreground: #7899ad;
+  --border: #7899ad;
+  --accent: #7899ad;
+  --ring: #7899ad;
+  --frame: #07161e;
 }
 
 @theme inline {
@@ -31,6 +33,7 @@
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
   --color-border: var(--border);
+  --color-accent: var(--accent);
   --color-ring: var(--ring);
   --font-sans: var(--font-sans);
   --font-mono: var(--font-mono);
@@ -61,6 +64,24 @@ body {
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.material-symbols-rounded {
+  font-family: "Material Symbols Rounded";
+  font-weight: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  font-feature-settings: "liga";
+  -webkit-font-feature-settings: "liga";
+  -webkit-font-smoothing: antialiased;
+  font-size: 1em;
+  user-select: none;
 }
 
 .skip-to-content {
