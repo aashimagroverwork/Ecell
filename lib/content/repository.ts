@@ -14,15 +14,19 @@ export async function readContent(): Promise<SiteContent> {
   const client = getReadClient();
   if (!client) return defaultContent;
 
-  const { data, error } = await client
-    .from("state")
-    .select("data")
-    .eq("id", STATE_ID)
-    .maybeSingle();
+  try {
+    const { data, error } = await client
+      .from("state")
+      .select("data")
+      .eq("id", STATE_ID)
+      .maybeSingle();
 
-  if (error || !data?.data) return defaultContent;
+    if (error || !data?.data) return defaultContent;
 
-  return reconcileContent(data.data as Partial<SiteContent>);
+    return reconcileContent(data.data as Partial<SiteContent>);
+  } catch {
+    return defaultContent;
+  }
 }
 
 /** Persist the whole site content to Supabase. Server-only. */

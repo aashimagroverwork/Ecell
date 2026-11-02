@@ -4,26 +4,29 @@ import { Providers } from "@/components/layout/providers";
 import { SkipToContent } from "@/components/layout/skip-to-content";
 import { baseMetadata } from "@/lib/metadata";
 import type { Metadata, Viewport } from "next";
-import { Inter, JetBrains_Mono, Playfair_Display } from "next/font/google";
+import localFont from "next/font/local";
 import type { ReactNode } from "react";
 import "./globals.css";
 
-const inter = Inter({
+const inter = localFont({
+  src: "./fonts/inter-latin.woff2",
   variable: "--font-inter",
-  subsets: ["latin"],
   display: "swap",
+  weight: "100 900",
 });
 
-const jetbrainsMono = JetBrains_Mono({
+const jetbrainsMono = localFont({
+  src: "./fonts/jetbrains-mono-latin.woff2",
   variable: "--font-jetbrains",
-  subsets: ["latin"],
   display: "swap",
+  weight: "100 800",
 });
 
-const playfair = Playfair_Display({
+const playfair = localFont({
+  src: "./fonts/playfair-display-latin.woff2",
   variable: "--font-playfair",
-  subsets: ["latin"],
   display: "swap",
+  weight: "400 900",
 });
 
 export const metadata: Metadata = baseMetadata;
