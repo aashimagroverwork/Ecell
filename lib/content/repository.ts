@@ -11,10 +11,10 @@ const MEDIA_BUCKET = "media";
  * the built-in defaults when Supabase is not configured or the row is empty.
  */
 export async function readContent(): Promise<SiteContent> {
-  const client = getReadClient();
-  if (!client) return defaultContent;
-
   try {
+    const client = getReadClient();
+    if (!client) return defaultContent;
+
     const { data, error } = await client
       .from("state")
       .select("data")

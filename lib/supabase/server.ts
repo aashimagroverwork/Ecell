@@ -1,8 +1,16 @@
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 
-const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
+/** Trim whitespace and strip accidental wrapping quotes from pasted values. */
+function normalize(value: string | undefined): string | undefined {
+  const trimmed = value?.trim().replace(/^["']|["']$/g, "");
+  return trimmed ? trimmed : undefined;
+}
+
+const SUPABASE_URL = normalize(process.env.NEXT_PUBLIC_SUPABASE_URL);
+const SUPABASE_ANON_KEY = normalize(process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
+const SUPABASE_SERVICE_ROLE_KEY = normalize(
+  process.env.SUPABASE_SERVICE_ROLE_KEY,
+);
 
 /** True when the public URL + anon key are present. */
 export function isSupabaseConfigured(): boolean {
